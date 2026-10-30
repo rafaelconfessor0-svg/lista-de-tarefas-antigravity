@@ -1,0 +1,616 @@
+/* ==========================================================================
+   FOLHA DE ESTILOS: style.css
+   Responsabilidade: Controlar toda a aparência visual, cores, tipografia,
+   espaçamentos e responsividade (adaptação para celular e computador).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. VARIÁVEIS CSS (Design Tokens)
+   Permite centralizar cores e medidas em um só lugar para facilitar manutenção.
+   -------------------------------------------------------------------------- */
+:root {
+  /* Paleta de Cores Principais */
+  --cor-primaria: #4f46e5;          /* Índigo moderno para botões e destaques */
+  --cor-primaria-hover: #4338ca;    /* Versão mais escura para o estado :hover */
+  --cor-primaria-clara: #e0e7ff;    /* Fundo suave para detalhes e badges */
+  
+  /* Cores de Estado e Feedback */
+  --cor-sucesso: #10b981;           /* Verde para tarefas concluídas */
+  --cor-sucesso-suave: #d1fae5;
+  --cor-pendente: #f59e0b;          /* Laranja âmbar para tarefas pendentes */
+  --cor-pendente-suave: #fef3c7;
+  --cor-perigo: #ef4444;            /* Vermelho para botão de exclusão */
+  --cor-perigo-hover: #dc2626;
+  --cor-perigo-suave: #fee2e2;
+
+  /* Cores Neutras (Fundo, Superfícies e Textos) */
+  --cor-fundo: #f8fafc;             /* Fundo geral da página (cinza suave) */
+  --cor-card: #ffffff;              /* Fundo branco do cartão principal */
+  --cor-superficie-suave: #f1f5f9;  /* Fundo de inputs e itens */
+  --cor-borda: #e2e8f0;             /* Linhas divisórias sutis */
+  --cor-texto-principal: #0f172a;   /* Texto principal de alto contraste */
+  --cor-texto-secundario: #475569;  /* Texto de apoio */
+  --cor-texto-suave: #94a3b8;       /* Texto atenuado (ex: tarefas concluídas) */
+
+  /* Tipografia e Raios de Borda */
+  --fonte-padrao: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --raio-borda-sm: 8px;
+  --raio-borda-md: 12px;
+  --raio-borda-lg: 20px;
+  --raio-borda-full: 9999px;
+
+  /* Sombras Elegantes (Efeito de Elevação e Profundidade) */
+  --sombra-card: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+  --sombra-item: 0 1px 3px 0 rgba(15, 23, 42, 0.05);
+  --sombra-foco: 0 0 0 3px rgba(79, 70, 229, 0.25);
+
+  /* Transições Suaves */
+  --transicao-rapida: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --------------------------------------------------------------------------
+   2. RESET E ESTILOS GLOBAIS
+   Garante consistência entre diferentes navegadores (Chrome, Firefox, Safari).
+   -------------------------------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--fonte-padrao);
+  background-color: var(--cor-fundo);
+  background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+  background-size: 24px 24px; /* Textura sutil de fundo */
+  color: var(--cor-texto-principal);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --------------------------------------------------------------------------
+   3. ESTRUTURA DO CONTAINER E CARTÃO PRINCIPAL
+   -------------------------------------------------------------------------- */
+.app-container {
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.app-card {
+  background-color: var(--cor-card);
+  border-radius: var(--raio-borda-lg);
+  box-shadow: var(--sombra-card);
+  border: 1px solid var(--cor-borda);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* --------------------------------------------------------------------------
+   4. CABEÇALHO DA APLICAÇÃO
+   -------------------------------------------------------------------------- */
+.app-cabecalho {
+  border-bottom: 1px solid var(--cor-borda);
+  padding-bottom: 20px;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.icone-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--raio-borda-md);
+  background: linear-gradient(135deg, var(--cor-primaria), #818cf8);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.icone-logo svg {
+  width: 26px;
+  height: 26px;
+}
+
+.titulo-principal {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--cor-texto-principal);
+  letter-spacing: -0.02em;
+}
+
+.subtitulo-data {
+  font-size: 0.875rem;
+  color: var(--cor-texto-secundario);
+  margin-top: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   5. CARDS DE ESTATÍSTICAS / MÉTRICAS
+   -------------------------------------------------------------------------- */
+.estatisticas-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.card-estatistica {
+  background-color: var(--cor-superficie-suave);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-borda-md);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: transform var(--transicao-rapida), box-shadow var(--transicao-rapida);
+}
+
+.card-estatistica:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-item);
+}
+
+.rotulo-estatistica {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--cor-texto-secundario);
+}
+
+.valor-estatistica {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--cor-texto-principal);
+}
+
+/* Cores específicas para cada status */
+.card-estatistica.pendentes .valor-estatistica {
+  color: var(--cor-pendente);
+}
+
+.card-estatistica.concluidas .valor-estatistica {
+  color: var(--cor-sucesso);
+}
+
+/* --------------------------------------------------------------------------
+   6. FORMULÁRIO DE ADIÇÃO DE TAREFAS
+   -------------------------------------------------------------------------- */
+.secao-adicionar {
+  width: 100%;
+}
+
+.form-tarefa {
+  display: flex;
+  gap: 10px;
+}
+
+.campo-input-wrapper {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.icone-input {
+  position: absolute;
+  left: 14px;
+  width: 18px;
+  height: 18px;
+  color: var(--cor-texto-suave);
+  pointer-events: none;
+}
+
+.input-tarefa {
+  width: 100%;
+  padding: 14px 16px 14px 42px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--cor-texto-principal);
+  background-color: var(--cor-superficie-suave);
+  border: 1.5px solid var(--cor-borda);
+  border-radius: var(--raio-borda-md);
+  outline: none;
+  transition: all var(--transicao-rapida);
+}
+
+.input-tarefa::placeholder {
+  color: var(--cor-texto-suave);
+}
+
+.input-tarefa:focus {
+  background-color: #ffffff;
+  border-color: var(--cor-primaria);
+  box-shadow: var(--sombra-foco);
+}
+
+.btn-adicionar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 20px;
+  background-color: var(--cor-primaria);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--raio-borda-md);
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all var(--transicao-rapida);
+  flex-shrink: 0;
+}
+
+.btn-adicionar svg {
+  width: 18px;
+  height: 18px;
+}
+
+.btn-adicionar:hover {
+  background-color: var(--cor-primaria-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+.btn-adicionar:active {
+  transform: translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+   7. BARRA DE FERRAMENTAS: FILTROS E LIMPEZA
+   -------------------------------------------------------------------------- */
+.barra-ferramentas {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.grupo-filtros {
+  display: flex;
+  background-color: var(--cor-superficie-suave);
+  padding: 4px;
+  border-radius: var(--raio-borda-md);
+  gap: 4px;
+}
+
+.btn-filtro {
+  background: none;
+  border: none;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--cor-texto-secundario);
+  border-radius: var(--raio-borda-sm);
+  cursor: pointer;
+  transition: all var(--transicao-rapida);
+}
+
+.btn-filtro:hover {
+  color: var(--cor-texto-principal);
+}
+
+.btn-filtro.ativo {
+  background-color: #ffffff;
+  color: var(--cor-primaria);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+}
+
+.btn-limpar-concluidas {
+  background: none;
+  border: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--cor-texto-suave);
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: var(--raio-borda-sm);
+  transition: all var(--transicao-rapida);
+}
+
+.btn-limpar-concluidas:hover {
+  color: var(--cor-perigo);
+  background-color: var(--cor-perigo-suave);
+}
+
+/* --------------------------------------------------------------------------
+   8. LISTA DE TAREFAS (ITENS DINÂMICOS)
+   -------------------------------------------------------------------------- */
+.secao-lista {
+  min-height: 180px;
+}
+
+.lista-tarefas {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Item individual da lista */
+.item-tarefa {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  background-color: #ffffff;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-borda-md);
+  box-shadow: var(--sombra-item);
+  transition: all var(--transicao-rapida);
+  animation: surgir 0.25s cubic-bezier(0, 0, 0.2, 1);
+}
+
+.item-tarefa:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.06);
+}
+
+/* Animação suave para quando uma nova tarefa entra na lista */
+@keyframes surgir {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Conteúdo da esquerda: Checkbox + Texto */
+.item-tarefa-conteudo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0; /* Previne quebras anômalas de flexbox com textos longos */
+  cursor: pointer;
+}
+
+/* Checkbox personalizado */
+.custom-checkbox {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 2px solid var(--cor-texto-suave);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all var(--transicao-rapida);
+  background-color: #ffffff;
+}
+
+.custom-checkbox svg {
+  width: 14px;
+  height: 14px;
+  stroke: #ffffff;
+  stroke-width: 3;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all var(--transicao-rapida);
+}
+
+.item-tarefa-conteudo:hover .custom-checkbox {
+  border-color: var(--cor-primaria);
+}
+
+/* Texto da tarefa */
+.texto-tarefa {
+  font-size: 0.95rem;
+  color: var(--cor-texto-principal);
+  word-break: break-word;
+  transition: all var(--transicao-rapida);
+}
+
+/* --------------------------------------------------------------------------
+   ESTILO VISUAL DIFERENCIADO PARA TAREFA CONCLUÍDA
+   - Texto riscado (line-through)
+   - Cor atenuada (diminuição de contraste)
+   - Fundo levemente acinzentado
+   - Checkbox preenchido em verde com ícone de check ativo
+   -------------------------------------------------------------------------- */
+.item-tarefa.concluida {
+  background-color: #f8fafc;
+  border-color: #f1f5f9;
+}
+
+.item-tarefa.concluida .custom-checkbox {
+  background-color: var(--cor-sucesso);
+  border-color: var(--cor-sucesso);
+}
+
+.item-tarefa.concluida .custom-checkbox svg {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.item-tarefa.concluida .texto-tarefa {
+  text-decoration: line-through;
+  color: var(--cor-texto-suave);
+}
+
+/* Botão de Excluir Tarefa */
+.btn-remover {
+  background: none;
+  border: none;
+  color: var(--cor-texto-suave);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: var(--raio-borda-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transicao-rapida);
+  flex-shrink: 0;
+}
+
+.btn-remover svg {
+  width: 18px;
+  height: 18px;
+}
+
+.btn-remover:hover {
+  color: var(--cor-perigo);
+  background-color: var(--cor-perigo-suave);
+  transform: scale(1.08);
+}
+
+/* --------------------------------------------------------------------------
+   9. ESTADO VAZIO AMIGÁVEL
+   Aparece quando não há nenhuma tarefa na lista ou no filtro atual.
+   -------------------------------------------------------------------------- */
+.estado-vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+  border: 2px dashed var(--cor-borda);
+  border-radius: var(--raio-borda-md);
+  background-color: #fafbfc;
+}
+
+.ilustracao-vazia {
+  width: 72px;
+  height: 72px;
+  margin-bottom: 16px;
+  color: var(--cor-texto-suave);
+}
+
+.ilustracao-vazia svg {
+  width: 100%;
+  height: 100%;
+}
+
+.titulo-vazio {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--cor-texto-principal);
+  margin-bottom: 6px;
+}
+
+.descricao-vazio {
+  font-size: 0.875rem;
+  color: var(--cor-texto-secundario);
+  max-width: 320px;
+}
+
+/* Classe utilitária para ocultar elementos controlada pelo JavaScript */
+.oculto {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   10. RODAPÉ
+   -------------------------------------------------------------------------- */
+.app-rodape {
+  border-top: 1px solid var(--cor-borda);
+  padding-top: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.dica-atalho {
+  font-size: 0.8rem;
+  color: var(--cor-texto-secundario);
+}
+
+.tecla-atalho {
+  background-color: var(--cor-superficie-suave);
+  border: 1px solid var(--cor-borda);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--cor-texto-principal);
+}
+
+.creditos {
+  font-size: 0.75rem;
+  color: var(--cor-texto-suave);
+}
+
+/* --------------------------------------------------------------------------
+   11. RESPONSIVIDADE (Design Adaptável para Dispositivos Móveis)
+   Ajusta elementos quando a tela for menor que 640px de largura.
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  body {
+    padding: 12px;
+  }
+
+  .app-card {
+    padding: 20px 16px;
+    gap: 18px;
+    border-radius: var(--raio-borda-md);
+  }
+
+  .titulo-principal {
+    font-size: 1.25rem;
+  }
+
+  .icone-logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .icone-logo svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* Em celulares, o botão adicionar pode ficar abaixo do input se o espaço for estreito */
+  .form-tarefa {
+    flex-direction: column;
+  }
+
+  .btn-adicionar {
+    padding: 14px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .barra-ferramentas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .grupo-filtros {
+    justify-content: space-between;
+  }
+
+  .btn-filtro {
+    flex: 1;
+    text-align: center;
+    padding: 8px 6px;
+  }
+
+  .btn-limpar-concluidas {
+    text-align: center;
+  }
+}

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Aplicação moderna e intuitiva de gerenciamento de tarefas (To-Do List)">
+  <title>Gerenciador de Tarefas | To-Do List</title>
+  
+  <!-- Estilos da aplicação -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Container principal centralizado -->
+  <main class="app-container">
+    
+    <!-- Cartão principal que envolve a aplicação -->
+    <div class="app-card">
+      
+      <!-- Cabeçalho com título, ícone e data -->
+      <header class="app-cabecalho">
+        <div class="logo-area">
+          <div class="icone-logo" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 11l3 3L22 4"></path>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+            </svg>
+          </div>
+          <div>
+            <h1 class="titulo-principal">Minhas Tarefas</h1>
+            <p id="data-atual" class="subtitulo-data">Organize o seu dia com foco e produtividade</p>
+          </div>
+        </div>
+      </header>
+
+      <!-- Painel de métricas/contadores de tarefas -->
+      <section class="estatisticas-container" aria-label="Contadores de tarefas">
+        <div class="card-estatistica">
+          <span class="rotulo-estatistica">Total</span>
+          <span id="contador-total" class="valor-estatistica">0</span>
+        </div>
+        <div class="card-estatistica pendentes">
+          <span class="rotulo-estatistica">Pendentes</span>
+          <span id="contador-pendentes" class="valor-estatistica">0</span>
+        </div>
+        <div class="card-estatistica concluidas">
+          <span class="rotulo-estatistica">Concluídas</span>
+          <span id="contador-concluidas" class="valor-estatistica">0</span>
+        </div>
+      </section>
+
+      <!-- Formulário para adicionar nova tarefa -->
+      <section class="secao-adicionar">
+        <form id="form-tarefa" class="form-tarefa" autocomplete="off">
+          <div class="campo-input-wrapper">
+            <svg class="icone-input" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="16"></line>
+              <line x1="8" y1="12" x2="16" y2="12"></line>
+            </svg>
+            <input 
+              type="text" 
+              id="input-tarefa" 
+              class="input-tarefa" 
+              placeholder="O que você precisa realizar hoje?" 
+              maxlength="100"
+              required
+              aria-label="Descrição da nova tarefa"
+            >
+          </div>
+          <button type="submit" id="btn-adicionar" class="btn-adicionar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>Adicionar</span>
+          </button>
+        </form>
+      </section>
+
+      <!-- Barra de ferramentas: Filtros de exibição e ação de limpeza -->
+      <section class="barra-ferramentas">
+        <div class="grupo-filtros" role="tablist" aria-label="Filtros de tarefas">
+          <button type="button" class="btn-filtro ativo" data-filtro="todas" role="tab" aria-selected="true">Todas</button>
+          <button type="button" class="btn-filtro" data-filtro="pendentes" role="tab" aria-selected="false">Pendentes</button>
+          <button type="button" class="btn-filtro" data-filtro="concluidas" role="tab" aria-selected="false">Concluídas</button>
+        </div>
+        
+        <button type="button" id="btn-limpar-concluidas" class="btn-limpar-concluidas" title="Excluir todas as tarefas marcadas como concluídas">
+          Limpar concluídas
+        </button>
+      </section>
+
+      <!-- Lista de tarefas e estado vazio -->
+      <section class="secao-lista">
+        <!-- Lista não-ordenada onde os itens serão inseridos dinamicamente pelo JavaScript -->
+        <ul id="lista-tarefas" class="lista-tarefas" aria-live="polite"></ul>
+
+        <!-- Estado vazio amigável quando não houver tarefas para exibir -->
+        <div id="estado-vazio" class="estado-vazio">
+          <div class="ilustracao-vazia" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="14" y="10" width="36" height="44" rx="4" fill="var(--cor-superficie-suave)"></rect>
+              <path d="M22 22h20"></path>
+              <path d="M22 30h20"></path>
+              <path d="M22 38h12"></path>
+              <circle cx="46" cy="46" r="10" fill="var(--cor-primaria-clara)" stroke="var(--cor-primaria)"></circle>
+              <path d="M42 46l3 3 6-6" stroke="var(--cor-primaria)"></path>
+            </svg>
+          </div>
+          <h2 class="titulo-vazio">Nenhuma tarefa por aqui!</h2>
+          <p id="descricao-vazio" class="descricao-vazio">
+            Adicione uma nova atividade acima para manter o foco nas suas prioridades do dia.
+          </p>
+        </div>
+      </section>
+
+      <!-- Rodapé com dica de usabilidade e créditos educativos -->
+      <footer class="app-rodape">
+        <p class="dica-atalho">
+          <span class="tecla-atalho">Enter</span> para adicionar rapidamente
+        </p>
+        <p class="creditos">
+          Construído com HTML, CSS e JavaScript puro • Armazenamento local ativo
+        </p>
+      </footer>
+
+    </div>
+  </main>
+
+  <!-- Script JavaScript carregado no final do documento para garantir que o DOM esteja pronto -->
+  <script src="script.js"></script>
+</body>
+</html>
